@@ -17,7 +17,7 @@ export default defineComponent({
   name: 'App',
   components: {
     HelloWorld,
-    InjectionTests
+    InjectionTest
   },
   setup () {
     provide(TokenApiKey, new TokenApi())

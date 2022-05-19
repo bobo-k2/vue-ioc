@@ -11,5 +11,5 @@ export default function buildDependencyContainer (): void {
   container.addSingleton<INetworkService>(NetworkService)
   container.addSingleton<IApiFactory>(ApiFactory)
 
-  container.addTransient<IAccountRepository>(AccountRepository)
+  container.addSingleton<IAccountRepository>(AccountRepository)
 }

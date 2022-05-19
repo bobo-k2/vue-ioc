@@ -1,6 +1,8 @@
 import { ApiPromise, WsProvider } from '@polkadot/api'
+import { injectable } from 'inversify-props'
 import IApi from '../IApi'
 
+@injectable()
 export default class Api implements IApi {
   private _api: ApiPromise;
 

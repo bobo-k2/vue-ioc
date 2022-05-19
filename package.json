@@ -13,9 +13,15 @@
     "@polkadot/api": "^8.4.2",
     "@polkadot/types": "^8.4.2",
     "core-js": "^3.6.5",
-    "vue": "^3.0.0"
+    "inversify-props": "^2.2.6",
+    "reflect-metadata": "^0.1.13",
+    "vue": "^3.0.0",
+    "vue-class-component": "^7.2.6",
+    "vue-property-decorator": "^9.1.2"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.17.12",
+    "@babel/plugin-proposal-decorators": "^7.17.12",
     "@babel/preset-es2015": "^7.0.0-beta.53",
     "@types/jest": "^24.0.19",
     "@typescript-eslint/eslint-plugin": "^4.18.0",

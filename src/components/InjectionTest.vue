@@ -9,6 +9,7 @@ import { inject } from 'inversify-props'
 import IAccountRepository from '../repositories/IAccountRepository'
 
 export default class InjectionTest extends Vue {
+  // BE CAREFUL. By convention property name should match interface name
   @inject() private accountRepository!: IAccountRepository
 
   async mounted (): Promise<void> {

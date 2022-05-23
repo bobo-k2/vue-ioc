@@ -1,7 +1,7 @@
 import '@polkadot/api-augment'
 import { BN } from '@polkadot/util'
 import IAccountRepository from '@/repositories/IAccountRepository'
-import { resetContainer, mockSingleton, cid, container } from 'inversify-props'
+import { resetContainer, mockTransient, cid, container } from 'inversify-props'
 import { AccountRepositoryMock } from '../../mocks/repositories/AccountRepositoryMock'
 import buildDependencyContainer from '@/app.container'
 import IAccountService from '@/services/IAccountService'
@@ -10,7 +10,7 @@ describe('AccountService.ts', () => {
   beforeEach(() => {
     resetContainer()
     buildDependencyContainer()
-    mockSingleton<IAccountRepository>(cid.IAccountRepository, AccountRepositoryMock)
+    mockTransient<IAccountRepository>(cid.IAccountRepository, AccountRepositoryMock)
   })
 
   it('returns proper account info', async () => {

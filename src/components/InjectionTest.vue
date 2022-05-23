@@ -3,19 +3,28 @@
 </template>
 
 <script lang="ts">
+import AccountInfo from '@/models/AccountInfo'
 import { Vue } from 'vue-class-component'
-
-import { inject } from 'inversify-props'
-import IAccountRepository from '../repositories/IAccountRepository'
+import { Action, Getter } from 'vuex-class'
+// import { inject } from 'inversify-props'
+// import IAccountService from '../services/IAccountService'
 
 export default class InjectionTest extends Vue {
   // BE CAREFUL. By convention property name should match interface name
-  @inject() private accountRepository!: IAccountRepository
+  // @inject() private accountService!: IAccountService
+
+  @Getter
+  private account!: AccountInfo
+
+  @Action
+  private getAccountInfo!: () => Promise<void>
 
   async mounted (): Promise<void> {
-    const res = await this.accountRepository.getAccount('XLoLJBQoMPHMLXYhdFobSpH5GujRoUH8d1sUtaEtoBG7zaS')
+    // const res = await this.accountService.getAccount('XLoLJBQoMPHMLXYhdFobSpH5GujRoUH8d1sUtaEtoBG7zaS')
 
-    console.log(res.toHuman())
+    // console.log(res.balance.toString())
+    console.log('fetching!')
+    await this.getAccountInfo()
   }
 }
 </script>

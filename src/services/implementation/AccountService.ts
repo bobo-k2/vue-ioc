@@ -1,7 +1,7 @@
 import { injectable, inject } from 'inversify-props'
 import IAccountService from '../IAccountService'
 import IAccountRepository from '../../repositories/IAccountRepository'
-import AccountInfo from '../../models/AccountInfo'
+import AccountInfo from '@/models/AccountInfo'
 
 @injectable()
 export default class AccountService implements IAccountService {
@@ -15,8 +15,8 @@ export default class AccountService implements IAccountService {
     const account = await this.accountRepository.getAccount(address)
 
     // TODO Some logic goes here.
-    const result = new AccountInfo(account.data.free.toBn())
+    // const result = new AccountInfo(account.data.free.toBn())
 
-    return result
+    return account
   }
 }

@@ -2,6 +2,7 @@ import { FrameSystemAccountInfo } from '@polkadot/types/lookup'
 import IAccountRepository from '../IAccountRepository'
 import { inject, injectable } from 'inversify-props'
 import IApiFactory from '@/integration/IApiFactory'
+import AccountInfo from '@/models/AccountInfo'
 
 @injectable()
 export default class AccountRepository implements IAccountRepository {
@@ -11,8 +12,10 @@ export default class AccountRepository implements IAccountRepository {
     }
   }
 
-  public async getAccount (address: string): Promise<FrameSystemAccountInfo> {
+  public async getAccount (address: string): Promise<AccountInfo> {
     const api = await this.apiFactory.getApi()
-    return await api.query.system.account(address)
+    const result = await api.query.system.account<FrameSystemAccountInfo>(address)
+
+    return new AccountInfo(result.data.free.toBn())
   }
 }

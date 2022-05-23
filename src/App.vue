@@ -1,6 +1,5 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld/>
   <InjectionTest />
 </template>
 
@@ -8,7 +7,6 @@
 import '@polkadot/api-augment'
 import { defineComponent, provide } from 'vue'
 // import serviceContainer from './service-container'
-import HelloWorld from './components/HelloWorld.vue'
 import InjectionTest from './components/InjectionTest.vue'
 import { TokenApiKey } from './repositories/symbols'
 import { TokenApi } from './repositories/token-api'
@@ -16,7 +14,6 @@ import { TokenApi } from './repositories/token-api'
 export default defineComponent({
   name: 'App',
   components: {
-    HelloWorld,
     InjectionTest
   },
   setup () {

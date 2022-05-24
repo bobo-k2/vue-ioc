@@ -1,22 +1,29 @@
 import { injectable, inject } from 'inversify-props'
 import IAccountService from '../IAccountService'
 import IAccountRepository from '../../repositories/IAccountRepository'
-import AccountInfo from '@/models/AccountInfo'
+import AccountInfoFormatted from '@/models/AccountInfoFormatted'
+import IBalanceFormatterService from '../IBalanceFormatterService'
 
 @injectable()
 export default class AccountService implements IAccountService {
-  constructor (@inject() private accountRepository: IAccountRepository) {
+  constructor (@inject() private accountRepository: IAccountRepository, @inject() private balanceFormatterService: IBalanceFormatterService) {
     if (!accountRepository) {
       throw new Error('accountRepository parameter not provided')
     }
+
+    if (!balanceFormatterService) {
+      throw new Error('balanceFormatterService parameter not provided')
+    }
   }
 
-  public async getAccount (address: string): Promise<AccountInfo> {
+  public async getAccount (address: string): Promise<AccountInfoFormatted> {
     const account = await this.accountRepository.getAccount(address)
 
     // TODO Some logic goes here.
-    // const result = new AccountInfo(account.data.free.toBn())
+    const balanceFormatted = await this.balanceFormatterService.formatBalance(account.balance)
+    const result = new AccountInfoFormatted(account.balance)
+    result.balanceFormatted = balanceFormatted
 
-    return account
+    return result
   }
 }

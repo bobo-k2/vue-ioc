@@ -2,6 +2,7 @@
   <div>
     <h2>Account balance is</h2>
     <div>{{ account.balance }}</div>
+    <div>{{ account.balanceFormatted }}</div>
   </div>
 </template>
 

@@ -1,12 +1,12 @@
 import { container, cid } from 'inversify-props'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { BN } from '@polkadot/util'
-import AccountInfo from '../../models/AccountInfo'
 import IAccountService from '../../services/IAccountService'
+import AccountInfoFormatted from '@/models/AccountInfoFormatted'
 
 @Module
 export default class General extends VuexModule {
-  public accountInfo: AccountInfo | null = null
+  public accountInfo: AccountInfoFormatted | null = null
 
   @Action({ rawError: true })
   public async getAccountInfo (): Promise<void> {
@@ -20,11 +20,11 @@ export default class General extends VuexModule {
   }
 
   @Mutation
-  public setAccountInfo (newAccountInfo: AccountInfo): void {
+  public setAccountInfo (newAccountInfo: AccountInfoFormatted): void {
     this.accountInfo = newAccountInfo
   }
 
-  get account (): AccountInfo {
-    return this.accountInfo !== null ? this.accountInfo : new AccountInfo(new BN(0))
+  get account (): AccountInfoFormatted {
+    return this.accountInfo !== null ? this.accountInfo : new AccountInfoFormatted(new BN(0))
   }
 }

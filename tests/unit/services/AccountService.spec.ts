@@ -18,5 +18,6 @@ describe('AccountService.ts', () => {
     const result = await service.getAccount('any')
 
     expect(result.balance).toStrictEqual(new BN('1000000000000000000'))
+    expect(result.balanceFormatted).toBeDefined()
   })
 })

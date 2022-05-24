@@ -12,6 +12,10 @@ import IBalanceFormatterService from './services/IBalanceFormatterService'
 import BalanceFormatterService from './services/implementation/BalanceFormatterService'
 import IMetadataRepository from './repositories/IMetadataRepository'
 import MetadataRepository from './repositories/implementation/MetadataRepository'
+import IXcmRepository from './repositories/IXcmRepository'
+import XcmRepository from './repositories/implementation/XcmRepository'
+import IXcmService from './services/IXcmService'
+import XcmService from './services/implementation/XcmService'
 
 export default function buildDependencyContainer (): void {
   container.addSingleton<INetworkService>(NetworkService)
@@ -19,7 +23,9 @@ export default function buildDependencyContainer (): void {
 
   container.addTransient<IAccountRepository>(AccountRepository)
   container.addTransient<IMetadataRepository>(MetadataRepository)
+  container.addTransient<IXcmRepository>(XcmRepository)
 
   container.addTransient<IBalanceFormatterService>(BalanceFormatterService)
   container.addTransient<IAccountService>(AccountService)
+  container.addTransient<IXcmService>(XcmService)
 }

@@ -77,6 +77,10 @@ export default class General extends VuexModule {
   }
 
   get accounts (): Account[] {
-    return this.accounts
+    return this.accountList
+  }
+
+  get currentAcc (): Account | null {
+    return this.currentAccount
   }
 }

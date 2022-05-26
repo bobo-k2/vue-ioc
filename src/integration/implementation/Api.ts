@@ -6,7 +6,7 @@ import IApi from '../IApi'
 export default class Api implements IApi {
   private _api: ApiPromise;
 
-  constructor (private _endpoint: string) {
+  constructor (_endpoint: string) {
     if (!_endpoint) {
       throw new Error('endpoint parameter not provided')
     }

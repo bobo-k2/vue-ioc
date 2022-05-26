@@ -1,7 +1,7 @@
 import { BN } from '@polkadot/util'
 
-export default class XcmAsset {
-  public id: string[]
+export class XcmAsset {
+  public id: string
   public deposit: BN
   public name: string
   public symbol: string
@@ -9,7 +9,7 @@ export default class XcmAsset {
   public isFrozen: boolean
 
   constructor (
-    id: string[],
+    id: string,
     deposit: BN,
     name: string,
     symbol: string,
@@ -22,5 +22,15 @@ export default class XcmAsset {
     this.symbol = symbol
     this.decimals = decimals
     this.isFrozen = isFrozen
+  }
+}
+
+export class XcmBalance {
+  public assetId: string
+  public balance: BN
+
+  constructor (assetId: string, balance: BN) {
+    this.assetId = assetId
+    this.balance = balance
   }
 }

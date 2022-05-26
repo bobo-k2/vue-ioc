@@ -1,5 +1,8 @@
-import { u8aToString } from '@polkadot/util'
-import XcmAsset from '@/models/XcmAsset'
+import { u8aToString, BN } from '@polkadot/util'
+import { QueryableStorageMultiArg } from '@polkadot/api/types'
+import { PalletAssetsAssetAccount } from '@polkadot/types/lookup'
+import { Option } from '@polkadot/types'
+import { XcmAsset, XcmBalance } from '@/models/XcmAsset'
 import IXcmRepository from '@/repositories/IXcmRepository'
 import { injectable, inject } from 'inversify-props'
 import IApiFactory from '@/integration/IApiFactory'
@@ -18,7 +21,7 @@ export default class XcmRepository implements IXcmRepository {
 
     const result: XcmAsset[] = []
     metadata.forEach(([key, value]) => {
-      const id = key.args.map(x => x.toString())
+      const id = key.args.map(x => x.toString())[0]
       const deposit = value.deposit.toBn()
       const name = u8aToString(value.name)
       const symbol = u8aToString(value.symbol)
@@ -28,6 +31,25 @@ export default class XcmRepository implements IXcmRepository {
       const asset = new XcmAsset(id, deposit, name, symbol, decimals, isFrozen)
 
       result.push(asset)
+    })
+
+    return result
+  }
+
+  public async getBalances (address: string, assets: XcmAsset[]): Promise<XcmBalance[]> {
+    const result: XcmBalance[] = []
+    const queries: QueryableStorageMultiArg<'promise'>[] = []
+    const api = await this.apiFactory.getApi()
+
+    // Build and issue multi query request
+    assets.map(x => queries.push([api.query.assets.account, [new BN(x.id), address]]))
+    const balancesOption = await api.queryMulti<Option<PalletAssetsAssetAccount>[]>(queries)
+
+    balancesOption.map((x, index) => {
+      if (x.isSome) {
+        const balance = x.unwrap()
+        result.push(new XcmBalance(assets[index].id, balance.balance.toBn()))
+      }
     })
 
     return result

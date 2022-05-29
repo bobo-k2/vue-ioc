@@ -15,17 +15,21 @@ export default class ApiFactory implements IApiFactory {
     }
   }
 
-  public async getApi (): Promise<ApiPromise> {
-    const currentEndpoint = this.networkService.getCurrentNetwork().endpoint
-    let api = this._instances.get(currentEndpoint)
+  public async getApiByEndpoint (endpoint: string): Promise<ApiPromise> {
+    let api = this._instances.get(endpoint)
 
     if (api) {
       return await api.getApi()
     }
 
-    api = new Api(currentEndpoint)
-    this._instances.set(currentEndpoint, api)
+    api = new Api(endpoint)
+    this._instances.set(endpoint, api)
 
     return await api.getApi()
+  }
+
+  public async getApi (): Promise<ApiPromise> {
+    const currentEndpoint = this.networkService.getCurrentNetwork().endpoint
+    return await this.getApiByEndpoint(currentEndpoint)
   }
 }

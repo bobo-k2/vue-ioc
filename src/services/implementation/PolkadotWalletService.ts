@@ -1,12 +1,20 @@
 import Account from '@/models/Account'
 import { web3Enable, web3Accounts } from '@polkadot/extension-dapp'
 import { InjectedExtension } from '@polkadot/extension-inject/types'
-import { injectable } from 'inversify-props'
+import { inject, injectable } from 'inversify-props'
 import IWalletService from '../IWalletService'
+import AccountInfo from '@/models/AccountInfo'
+import IAccountRepository from '@/repositories/IAccountRepository'
 
 @injectable()
 export default class PolkadotWalletService implements IWalletService {
   private readonly extensions: InjectedExtension[] = [];
+
+  constructor (@inject() private accountRepository: IAccountRepository) {
+    if (!accountRepository) {
+      throw new Error('accountRepository parameter not provided')
+    }
+  }
 
   public async getAccounts (): Promise<Account[]> {
     await this.checkExtension()
@@ -16,6 +24,10 @@ export default class PolkadotWalletService implements IWalletService {
     })
 
     return result
+  }
+
+  public async getBalance (address: string): Promise<AccountInfo> {
+    return await this.accountRepository.getAccount(address)
   }
 
   private async checkExtension (): Promise<void> {

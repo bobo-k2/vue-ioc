@@ -16,15 +16,17 @@ import IXcmRepository from './repositories/IXcmRepository'
 import XcmRepository from './repositories/implementation/XcmRepository'
 import IXcmService from './services/IXcmService'
 import XcmService from './services/implementation/XcmService'
-import IWalletService from './services/IWalletService'
+import IWalletService, { WalletType } from './services/IWalletService'
 import PolkadotWalletService from './services/implementation/PolkadotWalletService'
+import MetamaskWalletService from './services/implementation/MetamaskWalletService'
 
 export default function buildDependencyContainer (): void {
   container.addSingleton<INetworkService>(NetworkService)
   container.addSingleton<IApiFactory>(ApiFactory)
 
   // need to specify id because not following name convention IService -> Service
-  container.addSingleton<IWalletService>(PolkadotWalletService, 'PolkadotWalletService')
+  container.addSingleton<IWalletService>(PolkadotWalletService, WalletType.Polkadot)
+  container.addSingleton<IWalletService>(MetamaskWalletService, WalletType.Metamask)
 
   container.addTransient<IAccountRepository>(AccountRepository)
   container.addTransient<IMetadataRepository>(MetadataRepository)

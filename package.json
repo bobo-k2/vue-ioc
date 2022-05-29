@@ -20,7 +20,8 @@
     "vue-class-component": "^8.0.0-0",
     "vuex": "^4.0.2",
     "vuex-class": "^0.3.2",
-    "vuex-module-decorators": "^2.0.0"
+    "vuex-module-decorators": "^2.0.0",
+    "web3": "^1.7.3"
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.17.12",

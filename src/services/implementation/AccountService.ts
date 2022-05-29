@@ -4,6 +4,7 @@ import IAccountRepository from '../../repositories/IAccountRepository'
 import AccountInfoFormatted from '@/models/AccountInfoFormatted'
 import IBalanceFormatterService from '../IBalanceFormatterService'
 
+// TODO remove later as probably not needed
 @injectable()
 export default class AccountService implements IAccountService {
   constructor (@inject() private accountRepository: IAccountRepository, @inject() private balanceFormatterService: IBalanceFormatterService) {

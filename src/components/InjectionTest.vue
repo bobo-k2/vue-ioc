@@ -1,8 +1,12 @@
 <template>
   <div>
+    <WalletSelector @wallet-changed="handleWalletChanged" />
+    <br />
     <Accounts />
     <hr />
     <AccountDetails />
+    <hr />
+    <TransferBalance />
     <hr />
     <div>
       <h2>Assets</h2>
@@ -27,11 +31,15 @@ import { Action, Getter } from 'vuex-class'
 import Account from '@/models/Account'
 import Accounts from './Accounts.vue'
 import AccountDetails from './AccountDetails.vue'
+import WalletSelector from './WalletSelector.vue'
+import TransferBalance from './TransferBalance.vue'
 
 @Options({
   components: {
     Accounts,
-    AccountDetails
+    AccountDetails,
+    WalletSelector,
+    TransferBalance
   }
 })
 export default class InjectionTest extends Vue {
@@ -57,16 +65,24 @@ export default class InjectionTest extends Vue {
   getAccountInfo!: (address: string) => Promise<void>
 
   async mounted (): Promise<void> {
+    await this.loadData()
+  }
+
+  findBalance (assetId: string): BN | undefined {
+    return this.balances.find(x => x.assetId === assetId)?.balance
+  }
+
+  async handleWalletChanged (): Promise<void> {
+    await this.loadData()
+  }
+
+  private async loadData (): Promise<void> {
     await this.getAccounts()
     await this.getAssets()
 
     const address = this.currentAcc.address
     await this.getAccountInfo(address)
     await this.getBalances({ address, assets: this.assets })
-  }
-
-  findBalance (assetId: string): BN | undefined {
-    return this.balances.find(x => x.assetId === assetId)?.balance
   }
 }
 </script>

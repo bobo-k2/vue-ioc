@@ -1,10 +1,9 @@
-import { container, cid } from 'inversify-props'
+import { container } from 'inversify-props'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { BN } from '@polkadot/util'
-import IAccountService from '../../services/IAccountService'
 import AccountInfoFormatted from '@/models/AccountInfoFormatted'
 import Account from '@/models/Account'
-import IWalletService from '@/services/IWalletService'
+import IWalletService, { WalletType } from '@/services/IWalletService'
 
 @Module
 export default class General extends VuexModule {
@@ -12,12 +11,13 @@ export default class General extends VuexModule {
   public accountInfo: AccountInfoFormatted | null = null
   public accountList: Account[] = []
   public currentAccount: Account | null = null
+  private currentWallet: WalletType = WalletType.Polkadot
 
   @Action({ rawError: true })
   public async getAccountInfo (address: string): Promise<void> {
     try {
-      const accountService = container.get<IAccountService>(cid.IAccountService)
-      const accountInfo = await accountService.getAccount(address)
+      const wallet = container.get<IWalletService>(this.currentWallet)
+      const accountInfo = await wallet.getBalance(address)
       this.context.commit('setAccountInfo', accountInfo)
     } catch (error) {
       console.error(error)
@@ -36,7 +36,7 @@ export default class General extends VuexModule {
   @Action
   public async getAccounts (): Promise<void> {
     try {
-      const walletService = container.get<IWalletService>('PolkadotWalletService')
+      const walletService = container.get<IWalletService>(this.currentWallet)
       const accounts = await walletService.getAccounts()
       this.context.commit('setAccounts', accounts)
 
@@ -46,6 +46,11 @@ export default class General extends VuexModule {
     } catch (error) {
       console.error(error)
     }
+  }
+
+  @Action
+  public setWallet (wallet: WalletType): void {
+    this.context.commit('setCurrentWallet', wallet)
   }
 
   @Mutation
@@ -68,6 +73,11 @@ export default class General extends VuexModule {
     this.currentAccount = account
   }
 
+  @Mutation
+  public setCurrentWallet (wallet: WalletType): void {
+    this.currentWallet = wallet
+  }
+
   get account (): AccountInfoFormatted {
     return this.accountInfo !== null ? this.accountInfo : new AccountInfoFormatted(new BN(0))
   }
@@ -82,5 +92,9 @@ export default class General extends VuexModule {
 
   get currentAcc (): Account | null {
     return this.currentAccount
+  }
+
+  get wallet (): WalletType {
+    return this.currentWallet
   }
 }

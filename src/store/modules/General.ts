@@ -4,6 +4,7 @@ import { BN } from '@polkadot/util'
 import AccountInfoFormatted from '@/models/AccountInfoFormatted'
 import Account from '@/models/Account'
 import IWalletService, { WalletType } from '@/services/IWalletService'
+import { setCurrentWalletType } from '@/app.container'
 
 @Module
 export default class General extends VuexModule {
@@ -51,6 +52,7 @@ export default class General extends VuexModule {
   @Action
   public setWallet (wallet: WalletType): void {
     this.context.commit('setCurrentWallet', wallet)
+    setCurrentWalletType(wallet)
   }
 
   @Mutation

@@ -1,5 +1,6 @@
 import 'reflect-metadata'
 import { container } from 'inversify-props'
+import { interfaces } from 'inversify'
 import IApiFactory from './integration/IApiFactory'
 import ApiFactory from './integration/implementation/ApiFactory'
 import NetworkService from './integration/implementation/NetworkService'
@@ -19,14 +20,38 @@ import XcmService from './services/implementation/XcmService'
 import IWalletService, { WalletType } from './services/IWalletService'
 import PolkadotWalletService from './services/implementation/PolkadotWalletService'
 import MetamaskWalletService from './services/implementation/MetamaskWalletService'
+import { Symbols } from './symbols'
+import ITransactionService from './services/ITransactionService'
+import TransactionService from './services/implementation/TransactionService'
+
+let currentWalletType: WalletType
+
+export function setCurrentWalletType (wallet: WalletType): void {
+  currentWalletType = wallet
+  console.log('current', currentWalletType)
+}
+
+function getCurrentWalletType (): WalletType {
+  return currentWalletType
+}
 
 export default function buildDependencyContainer (): void {
+  setCurrentWalletType(WalletType.Polkadot)
+
   container.addSingleton<INetworkService>(NetworkService)
   container.addSingleton<IApiFactory>(ApiFactory)
 
   // need to specify id because not following name convention IService -> Service
   container.addSingleton<IWalletService>(PolkadotWalletService, WalletType.Polkadot)
   container.addSingleton<IWalletService>(MetamaskWalletService, WalletType.Metamask)
+
+  // Wallet factory
+  container.bind<interfaces.Factory<IWalletService>>(Symbols.WalletFactory)
+    .toFactory(() => {
+      return () => {
+        return container.get<IWalletService>(getCurrentWalletType())
+      }
+    })
 
   container.addTransient<IAccountRepository>(AccountRepository)
   container.addTransient<IMetadataRepository>(MetadataRepository)
@@ -35,4 +60,5 @@ export default function buildDependencyContainer (): void {
   container.addTransient<IBalanceFormatterService>(BalanceFormatterService)
   container.addTransient<IAccountService>(AccountService)
   container.addTransient<IXcmService>(XcmService)
+  container.addTransient<ITransactionService>(TransactionService)
 }

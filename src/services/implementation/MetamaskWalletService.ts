@@ -1,9 +1,12 @@
+import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { BN } from '@polkadot/util'
 import Web3 from 'web3'
 import Account from '@/models/Account'
 import IWalletService from '../IWalletService'
 import AccountInfo from '@/models/AccountInfo'
+import { injectable } from 'inversify-props'
 
+@injectable()
 export default class MetamaskWalletService implements IWalletService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private ethereum = (window as any).ethereum
@@ -23,6 +26,11 @@ export default class MetamaskWalletService implements IWalletService {
     const balance = await this.web3.eth.getBalance(address)
 
     return new AccountInfo(new BN(balance))
+  }
+
+  public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>): Promise<void> {
+    // extrinsic.signAndSend()
+    console.log(extrinsic.toHuman())
   }
 
   private async checkExtension (): Promise<void> {

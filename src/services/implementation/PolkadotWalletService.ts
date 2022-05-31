@@ -1,4 +1,5 @@
 import Account from '@/models/Account'
+import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { web3Enable, web3Accounts } from '@polkadot/extension-dapp'
 import { InjectedExtension } from '@polkadot/extension-inject/types'
 import { inject, injectable } from 'inversify-props'
@@ -28,6 +29,10 @@ export default class PolkadotWalletService implements IWalletService {
 
   public async getBalance (address: string): Promise<AccountInfo> {
     return await this.accountRepository.getAccount(address)
+  }
+
+  public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>): Promise<void> {
+    console.log(extrinsic.toHuman())
   }
 
   private async checkExtension (): Promise<void> {

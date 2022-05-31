@@ -4,7 +4,7 @@ import AccountInfo from '@/models/AccountInfo'
 
 export enum WalletType {
   Metamask = 'Metamask',
-  Polkadot = 'Pokadot'
+  Polkadot = 'Polkadot'
 }
 
 export default interface IWalletService {

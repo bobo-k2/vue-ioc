@@ -13,7 +13,7 @@ import Account from '@/models/Account'
 import AccountInfo from '@/models/AccountInfo'
 import { Vue } from 'vue-class-component'
 import { Getter } from 'vuex-class'
-import { Inject } from 'inversify-props'
+import { container, cid } from 'inversify-props'
 import ITransactionService from '@/services/ITransactionService'
 
 export default class AccountDetails extends Vue {
@@ -26,16 +26,13 @@ export default class AccountDetails extends Vue {
   @Getter
   private wallet!: string
 
-  @Inject()
-  private transactionService!: ITransactionService
-
   private to = ''
 
   private balance = 0
 
   public sendBalance (): void {
-    // const signerWallet = container.get<IWalletService>(this.wallet)
-    console.log(this.to, this.balance, this.transactionService)
+    const service = container.get<ITransactionService>(cid.ITransactionService)
+    console.log(this.to, this.balance, service)
   }
 }
 </script>

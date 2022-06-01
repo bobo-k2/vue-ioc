@@ -9,6 +9,8 @@ import IWalletService from '../IWalletService'
 import AccountInfo from '@/models/AccountInfo'
 import IAccountRepository from '@/repositories/IAccountRepository'
 import IApiFactory from '@/integration/IApiFactory'
+import IEventAggregator from '@/messaging/IEventAggregator'
+import { BalanceChangedMessage } from '@/messaging/BalanceChangedMessage'
 
 @injectable()
 export default class PolkadotWalletService implements IWalletService {
@@ -16,7 +18,8 @@ export default class PolkadotWalletService implements IWalletService {
 
   constructor (
     @inject() private accountRepository: IAccountRepository,
-    @inject() private apiFactory: IApiFactory
+    @inject() private apiFactory: IApiFactory,
+    @inject() private eventAggregator: IEventAggregator
   ) {
     if (!accountRepository) {
       throw new Error('accountRepository parameter not provided')
@@ -38,12 +41,15 @@ export default class PolkadotWalletService implements IWalletService {
   }
 
   public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>, senderAddress: string): Promise<void> {
-    extrinsic.signAndSend(senderAddress, {
+    await extrinsic.signAndSend(senderAddress, {
       signer: await this.getSigner(senderAddress),
       nonce: -1
     },
     result => {
       console.log('Polkadot transaction status', result.status.toHuman())
+      if (result.isFinalized) {
+        this.eventAggregator.publish(new BalanceChangedMessage(senderAddress))
+      }
     })
     // TODO handle errors
   }

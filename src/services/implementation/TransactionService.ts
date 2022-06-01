@@ -1,4 +1,3 @@
-import IApiFactory from '@/integration/IApiFactory'
 import { Symbols } from '@/symbols'
 import { BN } from '@polkadot/util'
 import { inject, injectable } from 'inversify-props'
@@ -9,16 +8,13 @@ import IWalletService from '../IWalletService'
 export default class TransactionService implements ITransactionService {
   private readonly wallet: IWalletService;
 
-  constructor (
-    @inject(Symbols.WalletFactory) walletFactory: () => IWalletService,
-    @inject() private apiFactory: IApiFactory
-  ) {
+  constructor (@inject(Symbols.WalletFactory) walletFactory: () => IWalletService) {
     this.wallet = walletFactory()
   }
 
   public async send (from: string, to: string, amount: string): Promise<void> {
     await this.wallet.transfer(from, to, new BN(amount))
 
-    console.log(from, to, amount)
+    console.log('send', from, to, amount)
   }
 }

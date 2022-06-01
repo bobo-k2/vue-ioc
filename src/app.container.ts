@@ -23,6 +23,8 @@ import MetamaskWalletService from './services/implementation/MetamaskWalletServi
 import { Symbols } from './symbols'
 import ITransactionService from './services/ITransactionService'
 import TransactionService from './services/implementation/TransactionService'
+import IEventAggregator from './messaging/IEventAggregator'
+import EventAggregator from './messaging/EventAggregator'
 
 let currentWalletType: WalletType
 
@@ -38,6 +40,7 @@ function getCurrentWalletType (): WalletType {
 export default function buildDependencyContainer (): void {
   setCurrentWalletType(WalletType.Polkadot)
 
+  container.addSingleton<IEventAggregator>(EventAggregator)
   container.addSingleton<INetworkService>(NetworkService)
   container.addSingleton<IApiFactory>(ApiFactory)
 

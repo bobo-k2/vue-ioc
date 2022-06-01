@@ -5,13 +5,18 @@ import { TransactionConfig } from 'web3-eth'
 import Account from '@/models/Account'
 import IWalletService from '../IWalletService'
 import AccountInfo from '@/models/AccountInfo'
-import { injectable } from 'inversify-props'
+import { inject, injectable } from 'inversify-props'
+import IEventAggregator from '@/messaging/IEventAggregator'
+import { BalanceChangedMessage } from '@/messaging/BalanceChangedMessage'
 
 @injectable()
 export default class MetamaskWalletService implements IWalletService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private ethereum = (window as any).ethereum
   private web3!: Web3
+
+  // eslint-disable-next-line no-useless-constructor
+  constructor (@inject() private eventAggregator: IEventAggregator) {}
 
   public async getAccounts (): Promise<Account[]> {
     await this.checkExtension()
@@ -51,6 +56,7 @@ export default class MetamaskWalletService implements IWalletService {
       .once('confirmation', (confNumber, receipt) => {
         const hash = receipt.transactionHash
         console.log('transaction hash', hash)
+        this.eventAggregator.publish(new BalanceChangedMessage(from))
         // callback(hash)
       })
   }

@@ -33,6 +33,9 @@ import Accounts from './Accounts.vue'
 import AccountDetails from './AccountDetails.vue'
 import WalletSelector from './WalletSelector.vue'
 import TransferBalance from './TransferBalance.vue'
+import { container, cid } from 'inversify-props'
+import IEventAggregator from '@/messaging/IEventAggregator'
+import { BalanceChangedMessage } from '@/messaging/BalanceChangedMessage'
 
 @Options({
   components: {
@@ -66,6 +69,14 @@ export default class InjectionTest extends Vue {
 
   async mounted (): Promise<void> {
     await this.loadData()
+
+    // Subscribe to balance changed message
+    const aggregator = container.get<IEventAggregator>(cid.IEventAggregator)
+    aggregator.subscribe(BalanceChangedMessage.name, async (m) => {
+      const message = m as BalanceChangedMessage
+      console.log(`Balance for account ${message.accountAddress} changed. Reading a new balance.`)
+      await this.getAccountInfo(message.accountAddress)
+    })
   }
 
   findBalance (assetId: string): BN | undefined {

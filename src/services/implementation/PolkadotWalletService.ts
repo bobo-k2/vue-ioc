@@ -1,3 +1,4 @@
+import { BN } from '@polkadot/util'
 import Account from '@/models/Account'
 import { Signer } from '@polkadot/types/types'
 import { SubmittableExtrinsic } from '@polkadot/api/types'
@@ -7,12 +8,16 @@ import { inject, injectable } from 'inversify-props'
 import IWalletService from '../IWalletService'
 import AccountInfo from '@/models/AccountInfo'
 import IAccountRepository from '@/repositories/IAccountRepository'
+import IApiFactory from '@/integration/IApiFactory'
 
 @injectable()
 export default class PolkadotWalletService implements IWalletService {
   private readonly extensions: InjectedExtension[] = [];
 
-  constructor (@inject() private accountRepository: IAccountRepository) {
+  constructor (
+    @inject() private accountRepository: IAccountRepository,
+    @inject() private apiFactory: IApiFactory
+  ) {
     if (!accountRepository) {
       throw new Error('accountRepository parameter not provided')
     }
@@ -36,8 +41,18 @@ export default class PolkadotWalletService implements IWalletService {
     extrinsic.signAndSend(senderAddress, {
       signer: await this.getSigner(senderAddress),
       nonce: -1
+    },
+    result => {
+      console.log('Polkadot transaction status', result.status.toHuman())
     })
     // TODO handle errors
+  }
+
+  public async transfer (from: string, to: string, amount: BN): Promise<void> {
+    const api = await this.apiFactory.getApi()
+    await this.signAndSend(
+      api.tx.balances.transfer(to, amount), from
+    )
   }
 
   private async getSigner (address: string): Promise<Signer> {

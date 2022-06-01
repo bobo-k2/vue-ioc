@@ -1,6 +1,7 @@
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { BN } from '@polkadot/util'
 import Web3 from 'web3'
+import { TransactionConfig } from 'web3-eth'
 import Account from '@/models/Account'
 import IWalletService from '../IWalletService'
 import AccountInfo from '@/models/AccountInfo'
@@ -30,7 +31,28 @@ export default class MetamaskWalletService implements IWalletService {
 
   public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>, senderAddress: string): Promise<void> {
     // extrinsic.signAndSend()
-    console.log(extrinsic.toHuman())
+    throw new Error('Not implemented')
+  }
+
+  public async transfer (from: string, to: string, amount: BN): Promise<void> {
+    const rawTx: TransactionConfig = {
+      nonce: await this.web3.eth.getTransactionCount(from),
+      gasPrice: this.web3.utils.toHex(1575000000),
+      from: from,
+      to: to,
+      value: amount // this.web3.utils.toWei(String(transferAmt), 'ether'),
+    }
+
+    console.log('Metamask transaction', rawTx)
+    const estimatedGas = await this.web3.eth.estimateGas(rawTx)
+
+    await this.web3.eth
+      .sendTransaction({ ...rawTx, gas: estimatedGas })
+      .once('confirmation', (confNumber, receipt) => {
+        const hash = receipt.transactionHash
+        console.log('transaction hash', hash)
+        // callback(hash)
+      })
   }
 
   private async checkExtension (): Promise<void> {

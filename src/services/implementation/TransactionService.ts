@@ -17,9 +17,7 @@ export default class TransactionService implements ITransactionService {
   }
 
   public async send (from: string, to: string, amount: string): Promise<void> {
-    const api = await this.apiFactory.getApi()
-    const transferCall = api.tx.balances.transfer(to, new BN(amount))
-    this.wallet.signAndSend(transferCall, from)
+    await this.wallet.transfer(from, to, new BN(amount))
 
     console.log(from, to, amount)
   }

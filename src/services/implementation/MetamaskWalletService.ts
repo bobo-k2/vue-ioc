@@ -28,7 +28,7 @@ export default class MetamaskWalletService implements IWalletService {
     return new AccountInfo(new BN(balance))
   }
 
-  public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>): Promise<void> {
+  public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>, senderAddress: string): Promise<void> {
     // extrinsic.signAndSend()
     console.log(extrinsic.toHuman())
   }

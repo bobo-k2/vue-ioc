@@ -1,4 +1,5 @@
 import Account from '@/models/Account'
+import { Signer } from '@polkadot/types/types'
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { web3Enable, web3Accounts } from '@polkadot/extension-dapp'
 import { InjectedExtension } from '@polkadot/extension-inject/types'
@@ -21,7 +22,7 @@ export default class PolkadotWalletService implements IWalletService {
     await this.checkExtension()
     const accounts = await web3Accounts()
     const result = accounts.map(x => {
-      return new Account(x.address, x.meta.genesisHash, x.meta.name)
+      return new Account(x.address, x.meta.genesisHash, x.meta.name, x.meta.source)
     })
 
     return result
@@ -31,8 +32,28 @@ export default class PolkadotWalletService implements IWalletService {
     return await this.accountRepository.getAccount(address)
   }
 
-  public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>): Promise<void> {
-    console.log(extrinsic.toHuman())
+  public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>, senderAddress: string): Promise<void> {
+    extrinsic.signAndSend(senderAddress, {
+      signer: await this.getSigner(senderAddress),
+      nonce: -1
+    })
+    // TODO handle errors
+  }
+
+  private async getSigner (address: string): Promise<Signer> {
+    const sender = (await this.getAccounts()).find(x => x.address === address)
+
+    if (sender) {
+      const extension = this.extensions.find(x => x.name === sender.source)
+
+      if (extension) {
+        return extension.signer
+      } else {
+        throw new Error(`Can't find polkadot extension for ${sender.address}, ${sender.source}`)
+      }
+    } else {
+      throw new Error(`Can't find account for ${address}`)
+    }
   }
 
   private async checkExtension (): Promise<void> {
@@ -50,7 +71,6 @@ export default class PolkadotWalletService implements IWalletService {
         throw new Error('Polkadot extension not installed.')
       }
 
-      // TODO see how to handle multiple extensions
       this.extensions.push(...extensions)
     }
   }

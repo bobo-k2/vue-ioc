@@ -28,10 +28,11 @@ export default class AccountDetails extends Vue {
 
   private to = ''
 
-  private balance = 0
+  private balance = '0'
 
   public sendBalance (): void {
     const service = container.get<ITransactionService>(cid.ITransactionService)
+    service.send(this.currentAcc.address, this.to, this.balance)
     console.log(this.to, this.balance, service)
   }
 }

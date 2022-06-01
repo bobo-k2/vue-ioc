@@ -12,5 +12,5 @@ export default interface IWalletService {
 
   getBalance (address: string): Promise<AccountInfo>
 
-  signAndSend (extrinsic: SubmittableExtrinsic<'promise'>): Promise<void>
+  signAndSend (extrinsic: SubmittableExtrinsic<'promise'>, senderAddress: string): Promise<void>
 }

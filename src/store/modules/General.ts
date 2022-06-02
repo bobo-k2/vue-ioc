@@ -12,6 +12,7 @@ export default class General extends VuexModule {
   public accountInfo: AccountInfoFormatted | null = null
   public accountList: Account[] = []
   public currentAccount: Account | null = null
+  public busy= false
   private currentWallet: WalletType = WalletType.Polkadot
 
   @Action({ rawError: true })
@@ -55,6 +56,11 @@ export default class General extends VuexModule {
     setCurrentWalletType(wallet)
   }
 
+  @Action
+  public setisBusyFlag (isBusy: boolean): void {
+    this.context.commit('setIsBusy', isBusy)
+  }
+
   @Mutation
   public setAccountInfo (newAccountInfo: AccountInfoFormatted): void {
     this.accountInfo = newAccountInfo
@@ -80,6 +86,11 @@ export default class General extends VuexModule {
     this.currentWallet = wallet
   }
 
+  @Mutation
+  public setIsBusy (isBusy: boolean): void {
+    this.busy = isBusy
+  }
+
   get account (): AccountInfoFormatted {
     return this.accountInfo !== null ? this.accountInfo : new AccountInfoFormatted(new BN(0))
   }
@@ -98,5 +109,9 @@ export default class General extends VuexModule {
 
   get wallet (): WalletType {
     return this.currentWallet
+  }
+
+  get isBusy (): boolean {
+    return this.busy
   }
 }

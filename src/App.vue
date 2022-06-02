@@ -1,6 +1,7 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <InjectionTest />
+  <div>
+    <InjectionTest />
+  </div>
 </template>
 
 <script lang="ts">

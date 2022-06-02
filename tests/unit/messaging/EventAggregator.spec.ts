@@ -1,3 +1,4 @@
+import 'reflect-metadata'
 import EventAggregator from '@/messaging/EventAggregator'
 import { EventMessage } from '@/messaging/EventMessage'
 

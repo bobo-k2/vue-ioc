@@ -57,7 +57,6 @@ export default class MetamaskWalletService implements IWalletService {
         const hash = receipt.transactionHash
         console.log('transaction hash', hash)
         this.eventAggregator.publish(new BalanceChangedMessage(from))
-        // callback(hash)
       })
   }
 

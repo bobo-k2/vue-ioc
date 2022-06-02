@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Select Wallet</h2>
-    Current wallet: {{ wallet }}
+    Current wallet: <b>{{ wallet }}</b>
     <div>
       <button v-if="!isMetamask()" @click="setMetamask()">Switch to Metamask</button>
       <button v-if="isMetamask()" @click="setPolkadot()">Switch to Polkadot</button>
@@ -36,3 +36,10 @@ export default class WalletSelector extends Vue {
   }
 }
 </script>
+
+<style scoped>
+  button {
+    padding: 10px;
+    font-size: 16px;
+  }
+</style>

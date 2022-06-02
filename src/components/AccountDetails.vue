@@ -1,7 +1,7 @@
 <template>
   <div>
     <h2>Current account balance - {{ currentAcc?.name }}</h2>
-    <div>{{ account?.balance }}</div>
+    <div><b>{{ account?.balance }}</b></div>
     <div>{{ account?.balanceFormatted }}</div>
   </div>
 </template>

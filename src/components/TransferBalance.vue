@@ -1,9 +1,15 @@
 <template>
   <div>
-    <h2>Transfer Balance</h2>
-    <div>From <b>{{ currentAcc?.address }}</b></div>
-    <div>To <input type="text" v-model="to" /></div>
-    <div>Amount <input type="text" v-model="balance" /></div>
+    <h2>Transfer</h2>
+    <div>From: <b>{{ currentAcc?.address }}</b></div>
+    <div class="row">
+      <div class="label">To</div>
+      <input type="text" v-model="to" />
+    </div>
+    <div class="row">
+      <div class="label">Amount</div>
+      <input type="text" v-model="balance" />
+    </div>
     <div><button @click="sendBalance">Send</button></div>
   </div>
 </template>
@@ -39,3 +45,32 @@ export default class AccountDetails extends Vue {
   }
 }
 </script>
+
+<style scoped>
+  input, button {
+    padding: 10px;
+    margin: 10px;
+    font-size: 16px;
+  }
+
+  input {
+    width: 400px;
+  }
+
+  button {
+    min-width: 100px;
+  }
+
+  .label {
+    width: 70px;
+    text-align: right;
+  }
+
+  .row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+</style>

@@ -20,7 +20,6 @@ export default class AccountService implements IAccountService {
   public async getAccount (address: string): Promise<AccountInfoFormatted> {
     const account = await this.accountRepository.getAccount(address)
 
-    // TODO Some logic goes here.
     const balanceFormatted = await this.balanceFormatterService.formatBalance(account.balance)
     const result = new AccountInfoFormatted(account.balance)
     result.balanceFormatted = balanceFormatted

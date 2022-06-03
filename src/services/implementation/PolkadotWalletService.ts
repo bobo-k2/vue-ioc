@@ -11,6 +11,7 @@ import IAccountRepository from '@/repositories/IAccountRepository'
 import IApiFactory from '@/integration/IApiFactory'
 import IEventAggregator from '@/messaging/IEventAggregator'
 import { BalanceChangedMessage } from '@/messaging/BalanceChangedMessage'
+import IBalanceFormatterService from '../IBalanceFormatterService'
 
 @injectable()
 export default class PolkadotWalletService implements IWalletService {
@@ -19,7 +20,8 @@ export default class PolkadotWalletService implements IWalletService {
   constructor (
     @inject() private accountRepository: IAccountRepository,
     @inject() private apiFactory: IApiFactory,
-    @inject() private eventAggregator: IEventAggregator
+    @inject() private eventAggregator: IEventAggregator,
+    @inject() private balanceFormatterService: IBalanceFormatterService
   ) {
     if (!accountRepository) {
       throw new Error('accountRepository parameter not provided')

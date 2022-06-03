@@ -1,7 +1,10 @@
 <template>
   <div>
     <h2>Transfer</h2>
-    <div>From: <b>{{ currentAcc?.address }}</b></div>
+    <div class="row">
+      <div class="label">From</div>
+      <input type="text" v-if="currentAcc" v-model="currentAcc.address" disabled />
+    </div>
     <div class="row">
       <div class="label">To</div>
       <input type="text" v-model="to" />
@@ -54,7 +57,7 @@ export default class AccountDetails extends Vue {
   }
 
   input {
-    width: 400px;
+    width: 480px;
   }
 
   button {

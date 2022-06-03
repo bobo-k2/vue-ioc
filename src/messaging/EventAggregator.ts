@@ -22,7 +22,7 @@ export default class EventAggregator implements IEventAggregator {
     }
 
     const event = this.events.get(messageName)
-    const count = event?.push(callback)
+    event && event.push(callback)
   }
 
   public unsubscribe (messageName: string, callback: CallbackFunction): void {

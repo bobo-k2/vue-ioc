@@ -3,7 +3,7 @@ import IMetadataRepository from '@/repositories/IMetadataRepository'
 import { injectable, inject } from 'inversify-props'
 import IBalanceFormatterService from '../IBalanceFormatterService'
 
-const DECIMALS = 3
+const DECIMALS = 4
 
 @injectable()
 export default class BalanceFormatterService implements IBalanceFormatterService {
@@ -21,6 +21,6 @@ export default class BalanceFormatterService implements IBalanceFormatterService
     const formattedBalance = balance.div(divisor).toNumber() /
       Math.pow(10, DECIMALS)
 
-    return formattedBalance.toString()
+    return `${formattedBalance.toString()} ${metadata.token}`
   }
 }

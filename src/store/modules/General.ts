@@ -1,10 +1,11 @@
-import { container } from 'inversify-props'
+import { container, cid } from 'inversify-props'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { BN } from '@polkadot/util'
 import AccountInfoFormatted from '@/models/AccountInfoFormatted'
 import Account from '@/models/Account'
 import IWalletService, { WalletType } from '@/services/IWalletService'
 import { setCurrentWalletType } from '@/app.container'
+import IBalanceFormatterService from '@/services/IBalanceFormatterService'
 
 @Module
 export default class General extends VuexModule {
@@ -19,8 +20,11 @@ export default class General extends VuexModule {
   public async getAccountInfo (address: string): Promise<void> {
     try {
       const wallet = container.get<IWalletService>(this.currentWallet)
+      const formatter = container.get<IBalanceFormatterService>(cid.IBalanceFormatterService)
       const accountInfo = await wallet.getBalance(address)
-      this.context.commit('setAccountInfo', accountInfo)
+      const formattedAccountInfo = new AccountInfoFormatted(accountInfo.balance)
+      formattedAccountInfo.balanceFormatted = await formatter.formatBalance(accountInfo.balance)
+      this.context.commit('setAccountInfo', formattedAccountInfo)
     } catch (error) {
       console.error(error)
     }

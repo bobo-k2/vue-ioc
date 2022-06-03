@@ -20,7 +20,5 @@ export default class TransactionService implements ITransactionService {
   public async send (from: string, to: string, amount: string): Promise<void> {
     this.eventAggregator.publish(new SystemBusyMessage(true))
     await this.wallet.transfer(from, to, new BN(amount))
-
-    console.log('send', from, to, amount)
   }
 }

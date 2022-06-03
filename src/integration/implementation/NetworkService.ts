@@ -13,6 +13,6 @@ export default class NetworkService implements INetworkService {
    * @returns Currently connected network
    */
   getCurrentNetwork (): Network {
-    return new Network('Astar', 'wss://rpc.shiden.astar.network')
+    return new Network('Shiden', 'wss://rpc.shiden.astar.network')
   }
 }

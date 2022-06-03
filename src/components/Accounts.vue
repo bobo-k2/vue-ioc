@@ -2,7 +2,7 @@
   <div>
     <h2>Accounts</h2>
     <div v-for="(account, index) in accounts" :key="index">
-      <b>{{ account.address }}</b> - {{account.name}}
+      <b>{{ account.address }}</b><span v-if="account.name"> - {{account.name}}</span>
     </div>
   </div>
 </template>

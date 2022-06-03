@@ -112,7 +112,6 @@ export default class InjectionTest extends Vue {
 
   private systemBusyCallback (m: EventMessage): void {
     const message = m as SystemBusyMessage
-    console.log('isBusy changed', message.isBusy)
     this.setisBusyFlag(message.isBusy)
   }
 

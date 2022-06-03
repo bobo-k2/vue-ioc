@@ -1,6 +1,6 @@
 import { EventMessage } from './EventMessage'
 
-export default interface IEventAggregator {
+export interface IEventAggregator {
   publish (message: EventMessage): void
 
   subscribe (messageName: string, callback: (mesage: EventMessage) => void): void

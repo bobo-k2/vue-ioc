@@ -1,5 +1,5 @@
-import AccountInfo from '@/models/AccountInfo'
+import { AccountInfo } from '@/models'
 
-export default interface IAccountRepository {
+export interface IAccountRepository {
   getAccount(address: string): Promise<AccountInfo>
 }

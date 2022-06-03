@@ -1,13 +1,13 @@
 import { BN } from '@polkadot/util'
-import IMetadataRepository from '@/repositories/IMetadataRepository'
+import { IMetadataRepository } from '@/repositories'
 import { injectable, inject } from 'inversify-props'
-import IBalanceFormatterService from '../IBalanceFormatterService'
-import Guard from '@/common/Guard'
+import { IBalanceFormatterService } from '@/services'
+import { Guard } from '@/common'
 
 const DECIMALS = 4
 
 @injectable()
-export default class BalanceFormatterService implements IBalanceFormatterService {
+export class BalanceFormatterService implements IBalanceFormatterService {
   constructor (@inject() private metadataRepository: IMetadataRepository) {
     Guard.ThrowIfUndefined('metadataRepository', metadataRepository)
   }

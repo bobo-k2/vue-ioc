@@ -1,4 +1,4 @@
-export default class ChainMetadata {
+export class ChainMetadata {
   public decimals: number
   public token: string
 

@@ -1,20 +1,18 @@
 import { BN } from '@polkadot/util'
-import Account from '@/models/Account'
+import { Account, AccountInfo } from '@/models'
 import { Signer } from '@polkadot/types/types'
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { web3Enable, web3Accounts } from '@polkadot/extension-dapp'
 import { InjectedExtension } from '@polkadot/extension-inject/types'
 import { inject, injectable } from 'inversify-props'
-import IWalletService from '../IWalletService'
-import AccountInfo from '@/models/AccountInfo'
-import IAccountRepository from '@/repositories/IAccountRepository'
-import IApiFactory from '@/integration/IApiFactory'
-import IEventAggregator from '@/messaging/IEventAggregator'
+import { IAccountRepository } from '@/repositories'
+import { IApiFactory } from '@/integration'
+import { IEventAggregator } from '@/messaging'
 import { BalanceChangedMessage } from '@/messaging/BalanceChangedMessage'
-import IBalanceFormatterService from '../IBalanceFormatterService'
+import { IWalletService, IBalanceFormatterService } from '@/services'
 
 @injectable()
-export default class PolkadotWalletService implements IWalletService {
+export class PolkadotWalletService implements IWalletService {
   private readonly extensions: InjectedExtension[] = [];
 
   constructor (

@@ -3,8 +3,8 @@ import { BN } from '@polkadot/util'
 import { resetContainer, cid, container, mockTransient } from 'inversify-props'
 import buildDependencyContainer from '@/app.container'
 import { MetadataRepositoryMock } from '../../mocks/repositories/MetadataRepositoryMock'
-import IMetadataRepository from '@/repositories/IMetadataRepository'
-import IBalanceFormatterService from '@/services/IBalanceFormatterService'
+import { IMetadataRepository } from '@/repositories'
+import { IBalanceFormatterService } from '@/services'
 
 describe('BalanceFormatterService.ts', () => {
   beforeEach(() => {

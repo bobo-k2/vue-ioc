@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { BN } from '@polkadot/util'
-import AccountInfo from '@/models/AccountInfo'
-import IAccountRepository from '@/repositories/IAccountRepository'
+import { AccountInfo } from '@/models'
+import { IAccountRepository } from '@/repositories'
 
 export class AccountRepositoryMock implements IAccountRepository {
   getAccount (address: string): Promise<AccountInfo> {

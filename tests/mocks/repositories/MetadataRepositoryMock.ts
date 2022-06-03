@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import IMetadataRepository from '@/repositories/IMetadataRepository'
-import ChainMetadata from '@/models/ChainMetadata'
+import { IMetadataRepository } from '@/repositories'
+import { ChainMetadata } from '@/models'
 
 export class MetadataRepositoryMock implements IMetadataRepository {
   public async getChainMetadata (): Promise<ChainMetadata> {

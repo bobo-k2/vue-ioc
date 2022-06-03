@@ -1,11 +1,9 @@
 import { container, cid } from 'inversify-props'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { BN } from '@polkadot/util'
-import AccountInfoFormatted from '@/models/AccountInfoFormatted'
-import Account from '@/models/Account'
-import IWalletService, { WalletType } from '@/services/IWalletService'
+import { AccountInfoFormatted, Account } from '@/models'
+import { IWalletService, IBalanceFormatterService, WalletType } from '@/services'
 import { setCurrentWalletType } from '@/app.container'
-import IBalanceFormatterService from '@/services/IBalanceFormatterService'
 
 @Module
 export default class General extends VuexModule {

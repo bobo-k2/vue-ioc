@@ -1,12 +1,11 @@
 import '@polkadot/api-augment'
 import { BN } from '@polkadot/util'
-import IAccountRepository from '@/repositories/IAccountRepository'
+import { IAccountRepository } from '@/repositories'
 import { resetContainer, mockTransient, cid, container } from 'inversify-props'
 import { AccountRepositoryMock } from '../../mocks/repositories/AccountRepositoryMock'
 import { BalanceFormatterServiceMock } from '../../mocks/services/BalanceFormatterServiceMock'
 import buildDependencyContainer from '@/app.container'
-import IAccountService from '@/services/IAccountService'
-import IBalanceFormatterService from '@/services/IBalanceFormatterService'
+import { IAccountService, IBalanceFormatterService } from '@/services'
 
 describe('AccountService.ts', () => {
   beforeEach(() => {

@@ -1,5 +1,5 @@
-import AccountInfoFormatted from '../models/AccountInfoFormatted'
+import { AccountInfoFormatted } from '@/models'
 
-export default interface IAccountService {
+export interface IAccountService {
   getAccount(address: string): Promise<AccountInfoFormatted>
 }

@@ -1,14 +1,13 @@
 import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { BN } from '@polkadot/util'
-import Account from '@/models/Account'
-import AccountInfo from '@/models/AccountInfo'
+import { Account, AccountInfo } from '@/models'
 
 export enum WalletType {
   Metamask = 'Metamask',
   Polkadot = 'Polkadot'
 }
 
-export default interface IWalletService {
+export interface IWalletService {
   getAccounts (): Promise<Account[]>
 
   getBalance (address: string): Promise<AccountInfo>

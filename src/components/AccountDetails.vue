@@ -8,8 +8,7 @@
 </template>
 
 <script lang="ts">
-import Account from '@/models/Account'
-import AccountInfo from '@/models/AccountInfo'
+import { Account, AccountInfo } from '@/models'
 import { Vue } from 'vue-class-component'
 import { Getter } from 'vuex-class'
 

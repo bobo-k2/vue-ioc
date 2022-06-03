@@ -3,12 +3,12 @@ import { QueryableStorageMultiArg } from '@polkadot/api/types'
 import { PalletAssetsAssetAccount } from '@polkadot/types/lookup'
 import { Option } from '@polkadot/types'
 import { XcmAsset, XcmBalance } from '@/models/XcmAsset'
-import IXcmRepository from '@/repositories/IXcmRepository'
+import { IXcmRepository } from '@/repositories'
 import { injectable, inject } from 'inversify-props'
-import IApiFactory from '@/integration/IApiFactory'
+import { IApiFactory } from '@/integration'
 
 @injectable()
-export default class XcmRepository implements IXcmRepository {
+export class XcmRepository implements IXcmRepository {
   constructor (@inject() private apiFactory: IApiFactory) {
     if (!apiFactory) {
       throw new Error('apiFactory parameter not provided')

@@ -1,7 +1,7 @@
 import { XcmAsset, XcmBalance } from '@/models/XcmAsset'
 import { Module, VuexModule, Action, Mutation } from 'vuex-module-decorators'
 import { container, cid } from 'inversify-props'
-import IXcmService from '@/services/IXcmService'
+import { IXcmService } from '@/services/IXcmService'
 
 @Module
 export default class Xcm extends VuexModule {

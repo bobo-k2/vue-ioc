@@ -18,12 +18,11 @@
 </template>
 
 <script lang="ts">
-import Account from '@/models/Account'
-import AccountInfo from '@/models/AccountInfo'
+import { Account, AccountInfo } from '@/models'
 import { Vue } from 'vue-class-component'
 import { Getter, Action } from 'vuex-class'
 import { container, cid } from 'inversify-props'
-import ITransactionService from '@/services/ITransactionService'
+import { ITransactionService } from '@/services'
 
 export default class AccountDetails extends Vue {
   @Getter

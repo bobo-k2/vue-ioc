@@ -1,12 +1,14 @@
 import { ApiPromise } from '@polkadot/api'
 import { inject, injectable } from 'inversify-props'
-import IApi from '../IApi'
-import IApiFactory from '../IApiFactory'
-import INetworkService from '../INetworkService'
-import Api from './Api'
+import {
+  IApi,
+  IApiFactory,
+  INetworkService
+} from '@/integration'
+import { Api } from './'
 
 @injectable()
-export default class ApiFactory implements IApiFactory {
+export class ApiFactory implements IApiFactory {
   private _instances = new Map<string, IApi>();
 
   constructor (@inject() private networkService: INetworkService) {

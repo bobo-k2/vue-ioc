@@ -1,5 +1,5 @@
 import { ApiPromise } from '@polkadot/api'
 
-export default interface IApi {
+export interface IApi {
   getApi(): Promise<ApiPromise>
 }

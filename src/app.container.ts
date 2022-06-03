@@ -1,30 +1,42 @@
 import 'reflect-metadata'
 import { container } from 'inversify-props'
 import { interfaces } from 'inversify'
-import IApiFactory from './integration/IApiFactory'
-import ApiFactory from './integration/implementation/ApiFactory'
-import NetworkService from './integration/implementation/NetworkService'
-import INetworkService from './integration/INetworkService'
-import IAccountRepository from './repositories/IAccountRepository'
-import AccountRepository from './repositories/implementation/AccountRepository'
-import IAccountService from './services/IAccountService'
-import AccountService from './services/implementation/AccountService'
-import IBalanceFormatterService from './services/IBalanceFormatterService'
-import BalanceFormatterService from './services/implementation/BalanceFormatterService'
-import IMetadataRepository from './repositories/IMetadataRepository'
-import MetadataRepository from './repositories/implementation/MetadataRepository'
-import IXcmRepository from './repositories/IXcmRepository'
-import XcmRepository from './repositories/implementation/XcmRepository'
-import IXcmService from './services/IXcmService'
-import XcmService from './services/implementation/XcmService'
-import IWalletService, { WalletType } from './services/IWalletService'
-import PolkadotWalletService from './services/implementation/PolkadotWalletService'
-import MetamaskWalletService from './services/implementation/MetamaskWalletService'
+import {
+  IApiFactory,
+  INetworkService
+} from '@/integration'
+import {
+  ApiFactory,
+  NetworkService
+} from '@/integration/implementation'
+import {
+  IAccountRepository,
+  IMetadataRepository,
+  IXcmRepository
+} from '@/repositories'
+import {
+  AccountRepository,
+  MetadataRepository,
+  XcmRepository
+} from '@/repositories/implementation'
+import {
+  IAccountService,
+  IBalanceFormatterService,
+  IXcmService,
+  IWalletService,
+  ITransactionService,
+  WalletType
+} from './services/'
+import {
+  AccountService,
+  BalanceFormatterService,
+  XcmService,
+  PolkadotWalletService,
+  MetamaskWalletService,
+  TransactionService
+} from '@/services/implementation'
 import { Symbols } from './symbols'
-import ITransactionService from './services/ITransactionService'
-import TransactionService from './services/implementation/TransactionService'
-import IEventAggregator from './messaging/IEventAggregator'
-import EventAggregator from './messaging/EventAggregator'
+import { IEventAggregator, EventAggregator } from '@/messaging'
 
 let currentWalletType: WalletType
 

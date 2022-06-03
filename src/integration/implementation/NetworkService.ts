@@ -1,12 +1,12 @@
-import Network from '@/models/Network'
+import { Network } from '@/models'
 import { injectable } from 'inversify-props'
-import INetworkService from '../INetworkService'
+import { INetworkService } from '@/integration'
 
 /**
  * Service that manages network connections.
  */
 @injectable()
-export default class NetworkService implements INetworkService {
+export class NetworkService implements INetworkService {
   /**
    * Gets current network
    *

@@ -1,4 +1,4 @@
-export default class XcmNetwork {
+export class XcmNetwork {
   public name: string
   public endpoint: string
 

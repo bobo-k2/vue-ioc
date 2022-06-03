@@ -1,11 +1,11 @@
 import { injectable } from 'inversify-props'
 import { EventMessage } from './EventMessage'
-import IEventAggregator from './IEventAggregator'
+import { IEventAggregator } from './IEventAggregator'
 
 export type CallbackFunction = (message: EventMessage) => void
 
 @injectable()
-export default class EventAggregator implements IEventAggregator {
+export class EventAggregator implements IEventAggregator {
   private events = new Map<string, CallbackFunction[]>()
 
   public publish (message: EventMessage): void {

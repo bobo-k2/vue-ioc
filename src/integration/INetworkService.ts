@@ -1,5 +1,5 @@
-import Network from '@/models/Network'
+import { Network } from '@/models'
 
-export default interface INetworkService {
+export interface INetworkService {
   getCurrentNetwork(): Network
 }

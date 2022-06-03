@@ -1,11 +1,11 @@
 import { FrameSystemAccountInfo } from '@polkadot/types/lookup'
-import IAccountRepository from '../IAccountRepository'
+import { IAccountRepository } from '@/repositories'
 import { inject, injectable } from 'inversify-props'
-import IApiFactory from '@/integration/IApiFactory'
-import AccountInfo from '@/models/AccountInfo'
+import { IApiFactory } from '@/integration'
+import { AccountInfo } from '@/models'
 
 @injectable()
-export default class AccountRepository implements IAccountRepository {
+export class AccountRepository implements IAccountRepository {
   constructor (@inject() private apiFactory: IApiFactory) {
     if (!apiFactory) {
       throw new Error('apiFactory parameter not provided')

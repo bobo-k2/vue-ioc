@@ -1,13 +1,12 @@
 import { injectable, inject } from 'inversify-props'
-import IAccountService from '../IAccountService'
-import IAccountRepository from '../../repositories/IAccountRepository'
-import AccountInfoFormatted from '@/models/AccountInfoFormatted'
-import IBalanceFormatterService from '../IBalanceFormatterService'
-import Guard from '@/common/Guard'
+import { IAccountRepository } from '../../repositories'
+import { AccountInfoFormatted } from '@/models'
+import { IBalanceFormatterService, IAccountService } from '@/services'
+import { Guard } from '@/common'
 
 // TODO remove later as probably not needed
 @injectable()
-export default class AccountService implements IAccountService {
+export class AccountService implements IAccountService {
   constructor (
     @inject() private accountRepository: IAccountRepository,
     @inject() private balanceFormatterService: IBalanceFormatterService

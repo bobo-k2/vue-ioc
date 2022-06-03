@@ -1,4 +1,4 @@
-import Account from '@/models/Account'
+import { Account } from '@/models'
 
 describe('Account.ts', () => {
   it('throws error if address is not provided', () => {

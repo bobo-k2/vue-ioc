@@ -1,10 +1,10 @@
 import { inject, injectable } from 'inversify-props'
-import IApiFactory from '@/integration/IApiFactory'
-import IMetadataRepository from '../IMetadataRepository'
-import ChainMetadata from '@/models/ChainMetadata'
+import { IApiFactory } from '@/integration'
+import { IMetadataRepository } from '@/repositories'
+import { ChainMetadata } from '@/models'
 
 @injectable()
-export default class MetadataRepository implements IMetadataRepository {
+export class MetadataRepository implements IMetadataRepository {
   constructor (@inject() private apiFactory: IApiFactory) {
     if (!apiFactory) {
       throw new Error('apiFactory parameter not provided')

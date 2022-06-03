@@ -1,6 +1,6 @@
-import Guard from '@/common/Guard'
+import { Guard } from '@/common'
 
-export default class Account {
+export class Account {
   public readonly address: string;
   public readonly genesisHash: string | null | undefined
   public readonly name?: string

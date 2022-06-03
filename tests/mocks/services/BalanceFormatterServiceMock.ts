@@ -1,4 +1,4 @@
-import IBalanceFormatterService from '@/services/IBalanceFormatterService'
+import { IBalanceFormatterService } from '@/services'
 import { BN } from '@polkadot/util'
 
 const DECIMALS = 4

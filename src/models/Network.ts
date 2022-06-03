@@ -1,4 +1,4 @@
-export default class Network {
+export class Network {
   public name: string
   public endpoint: string
 

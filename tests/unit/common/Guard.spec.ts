@@ -1,4 +1,4 @@
-import Guard from '@/common/Guard'
+import { Guard } from '@/common'
 
 describe('Guard.ts', () => {
   it('throws error if paramName is not provided', () => {

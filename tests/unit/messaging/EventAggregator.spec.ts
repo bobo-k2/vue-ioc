@@ -1,6 +1,5 @@
 import 'reflect-metadata'
-import EventAggregator from '@/messaging/EventAggregator'
-import { EventMessage } from '@/messaging/EventMessage'
+import { EventAggregator, EventMessage } from '@/messaging'
 
 class TestMessage extends EventMessage {
   public message: string

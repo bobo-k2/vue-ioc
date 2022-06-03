@@ -1,5 +1,5 @@
-import ChainMetadata from '@/models/ChainMetadata'
+import { ChainMetadata } from '@/models'
 
-export default interface IMetadataRepository {
+export interface IMetadataRepository {
   getChainMetadata(): Promise<ChainMetadata>
 }

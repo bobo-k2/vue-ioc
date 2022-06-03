@@ -2,15 +2,14 @@ import { SubmittableExtrinsic } from '@polkadot/api/types'
 import { BN } from '@polkadot/util'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-eth'
-import Account from '@/models/Account'
-import IWalletService from '../IWalletService'
-import AccountInfo from '@/models/AccountInfo'
+import { Account, AccountInfo } from '@/models'
+import { IWalletService } from '@/services'
 import { inject, injectable } from 'inversify-props'
-import IEventAggregator from '@/messaging/IEventAggregator'
+import { IEventAggregator } from '@/messaging'
 import { BalanceChangedMessage } from '@/messaging/BalanceChangedMessage'
 
 @injectable()
-export default class MetamaskWalletService implements IWalletService {
+export class MetamaskWalletService implements IWalletService {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   private ethereum = (window as any).ethereum
   private web3!: Web3

@@ -3,7 +3,7 @@
     <div v-if="isBusy" id="overlay">
       <div id="text">Transaction in progress...</div>
     </div>
-    <img alt="Astar logo" src="../assets/astar.png">
+    <!-- <img alt="Astar logo" src="../assets/astar.png"> -->
     <WalletSelector @wallet-changed="handleWalletChanged" />
     <hr />
     <Accounts />

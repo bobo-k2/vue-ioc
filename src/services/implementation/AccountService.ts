@@ -3,11 +3,15 @@ import IAccountService from '../IAccountService'
 import IAccountRepository from '../../repositories/IAccountRepository'
 import AccountInfoFormatted from '@/models/AccountInfoFormatted'
 import IBalanceFormatterService from '../IBalanceFormatterService'
+import Guard from '@/common/Guard'
 
 // TODO remove later as probably not needed
 @injectable()
 export default class AccountService implements IAccountService {
-  constructor (@inject() private accountRepository: IAccountRepository, @inject() private balanceFormatterService: IBalanceFormatterService) {
+  constructor (
+    @inject() private accountRepository: IAccountRepository,
+    @inject() private balanceFormatterService: IBalanceFormatterService
+  ) {
     if (!accountRepository) {
       throw new Error('accountRepository parameter not provided')
     }
@@ -18,6 +22,8 @@ export default class AccountService implements IAccountService {
   }
 
   public async getAccount (address: string): Promise<AccountInfoFormatted> {
+    Guard.ThrowIfUndefined('address', address)
+
     const account = await this.accountRepository.getAccount(address)
 
     const balanceFormatted = await this.balanceFormatterService.formatBalance(account.balance)

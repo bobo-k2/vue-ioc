@@ -34,6 +34,7 @@ export default class MetamaskWalletService implements IWalletService {
     return new AccountInfo(new BN(balance))
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   public async signAndSend (extrinsic: SubmittableExtrinsic<'promise'>, senderAddress: string): Promise<void> {
     // extrinsic.signAndSend()
     throw new Error('Not implemented')

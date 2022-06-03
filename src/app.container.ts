@@ -30,7 +30,6 @@ let currentWalletType: WalletType
 
 export function setCurrentWalletType (wallet: WalletType): void {
   currentWalletType = wallet
-  console.log('current', currentWalletType)
 }
 
 function getCurrentWalletType (): WalletType {

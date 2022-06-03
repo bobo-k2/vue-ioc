@@ -4,6 +4,6 @@ import ChainMetadata from '@/models/ChainMetadata'
 
 export class MetadataRepositoryMock implements IMetadataRepository {
   public async getChainMetadata (): Promise<ChainMetadata> {
-    return Promise.resolve(new ChainMetadata(18))
+    return Promise.resolve(new ChainMetadata(18, 'ASTR'))
   }
 }

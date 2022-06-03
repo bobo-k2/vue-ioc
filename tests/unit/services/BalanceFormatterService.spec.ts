@@ -17,6 +17,6 @@ describe('BalanceFormatterService.ts', () => {
     const service = container.get<IBalanceFormatterService>(cid.IBalanceFormatterService)
     const result = await service.formatBalance(new BN('1234500000000000000'))
 
-    expect(result).toStrictEqual('1.234')
+    expect(result).toStrictEqual('1.2345 ASTR')
   })
 })
